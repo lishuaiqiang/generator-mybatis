@@ -2,10 +2,10 @@ package com.supermap.base.pojo;
 
 import java.util.Date;
 
-public class smPeEmployeeHour {
+public class SmPeEmployeeHour {
     private Integer id;
 
-    private Integer pid;
+    private String pid;
 
     private Integer planitemId;
 
@@ -21,7 +21,7 @@ public class smPeEmployeeHour {
 
     private String deptName;
 
-    private String subdeptId;
+    private Integer subdeptId;
 
     private String subdeptName;
 
@@ -49,6 +49,12 @@ public class smPeEmployeeHour {
 
     private Integer weekIndexId;
 
+    private Date startdate;
+
+    private Date enddate;
+
+    private String taskDesc;
+
     public Integer getId() {
         return id;
     }
@@ -57,12 +63,12 @@ public class smPeEmployeeHour {
         this.id = id;
     }
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setPid(String pid) {
+        this.pid = pid == null ? null : pid.trim();
     }
 
     public Integer getPlanitemId() {
@@ -121,12 +127,12 @@ public class smPeEmployeeHour {
         this.deptName = deptName == null ? null : deptName.trim();
     }
 
-    public String getSubdeptId() {
+    public Integer getSubdeptId() {
         return subdeptId;
     }
 
-    public void setSubdeptId(String subdeptId) {
-        this.subdeptId = subdeptId == null ? null : subdeptId.trim();
+    public void setSubdeptId(Integer subdeptId) {
+        this.subdeptId = subdeptId;
     }
 
     public String getSubdeptName() {
@@ -231,5 +237,29 @@ public class smPeEmployeeHour {
 
     public void setWeekIndexId(Integer weekIndexId) {
         this.weekIndexId = weekIndexId;
+    }
+
+    public Date getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
+    }
+
+    public Date getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(Date enddate) {
+        this.enddate = enddate;
+    }
+
+    public String getTaskDesc() {
+        return taskDesc;
+    }
+
+    public void setTaskDesc(String taskDesc) {
+        this.taskDesc = taskDesc == null ? null : taskDesc.trim();
     }
 }

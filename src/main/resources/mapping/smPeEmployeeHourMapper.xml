@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.supermap.base.mapper.smPeEmployeeHourMapper" >
-  <resultMap id="BaseResultMap" type="com.supermap.base.pojo.smPeEmployeeHour" >
+<mapper namespace="com.supermap.base.mapper.SmPeEmployeeHourMapper" >
+  <resultMap id="BaseResultMap" type="com.supermap.base.pojo.SmPeEmployeeHour" >
     <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="PID" property="pid" jdbcType="INTEGER" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
     <result column="PLANITEM_ID" property="planitemId" jdbcType="INTEGER" />
     <result column="PLANITEM_NAME" property="planitemName" jdbcType="VARCHAR" />
     <result column="PLANITERM_HOUR" property="planitermHour" jdbcType="DOUBLE" />
@@ -11,7 +11,7 @@
     <result column="STAFFNAME" property="staffname" jdbcType="VARCHAR" />
     <result column="DEPT_ID" property="deptId" jdbcType="INTEGER" />
     <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
-    <result column="SUBDEPT_ID" property="subdeptId" jdbcType="VARCHAR" />
+    <result column="SUBDEPT_ID" property="subdeptId" jdbcType="INTEGER" />
     <result column="SUBDEPT_NAME" property="subdeptName" jdbcType="VARCHAR" />
     <result column="PROJECT_ID" property="projectId" jdbcType="INTEGER" />
     <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
@@ -25,12 +25,15 @@
     <result column="STATUS" property="status" jdbcType="INTEGER" />
     <result column="WORK_TYPE" property="workType" jdbcType="INTEGER" />
     <result column="WEEK_INDEX_ID" property="weekIndexId" jdbcType="INTEGER" />
+    <result column="STARTDATE" property="startdate" jdbcType="TIMESTAMP" />
+    <result column="ENDDATE" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="TASK_DESC" property="taskDesc" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, PID, PLANITEM_ID, PLANITEM_NAME, PLANITERM_HOUR, STAFFCODE, STAFFNAME, DEPT_ID, 
     DEPT_NAME, SUBDEPT_ID, SUBDEPT_NAME, PROJECT_ID, PROJECT_NAME, PROJECT_MANAGER, STONE_NAME, 
     SUBSTAFFCODE, SUBSTAFFNAME, WORK_SHEET, MSGDATETIME, ISDELETE, STATUS, WORK_TYPE, 
-    WEEK_INDEX_ID
+    WEEK_INDEX_ID, STARTDATE, ENDDATE, TASK_DESC
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -42,7 +45,7 @@
     delete from sm_pe_employee_hour
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.supermap.base.pojo.smPeEmployeeHour" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.supermap.base.pojo.SmPeEmployeeHour" useGeneratedKeys="true" keyProperty="id" >
     insert into sm_pe_employee_hour (PID, PLANITEM_ID, PLANITEM_NAME, 
       PLANITERM_HOUR, STAFFCODE, STAFFNAME, 
       DEPT_ID, DEPT_NAME, SUBDEPT_ID, 
@@ -50,17 +53,19 @@
       PROJECT_MANAGER, STONE_NAME, SUBSTAFFCODE, 
       SUBSTAFFNAME, WORK_SHEET, MSGDATETIME, 
       ISDELETE, STATUS, WORK_TYPE, 
-      WEEK_INDEX_ID)
-    values (#{pid,jdbcType=INTEGER}, #{planitemId,jdbcType=INTEGER}, #{planitemName,jdbcType=VARCHAR}, 
+      WEEK_INDEX_ID, STARTDATE, ENDDATE, 
+      TASK_DESC)
+    values (#{pid,jdbcType=VARCHAR}, #{planitemId,jdbcType=INTEGER}, #{planitemName,jdbcType=VARCHAR}, 
       #{planitermHour,jdbcType=DOUBLE}, #{staffcode,jdbcType=VARCHAR}, #{staffname,jdbcType=VARCHAR}, 
-      #{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{subdeptId,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{subdeptId,jdbcType=INTEGER}, 
       #{subdeptName,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, 
       #{projectManager,jdbcType=VARCHAR}, #{stoneName,jdbcType=VARCHAR}, #{substaffcode,jdbcType=VARCHAR}, 
       #{substaffname,jdbcType=VARCHAR}, #{workSheet,jdbcType=DOUBLE}, #{msgdatetime,jdbcType=TIMESTAMP}, 
       #{isdelete,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{workType,jdbcType=INTEGER}, 
-      #{weekIndexId,jdbcType=INTEGER})
+      #{weekIndexId,jdbcType=INTEGER}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{taskDesc,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.supermap.base.pojo.smPeEmployeeHour" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.supermap.base.pojo.SmPeEmployeeHour" useGeneratedKeys="true" keyProperty="id" >
     insert into sm_pe_employee_hour
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="pid != null" >
@@ -129,10 +134,19 @@
       <if test="weekIndexId != null" >
         WEEK_INDEX_ID,
       </if>
+      <if test="startdate != null" >
+        STARTDATE,
+      </if>
+      <if test="enddate != null" >
+        ENDDATE,
+      </if>
+      <if test="taskDesc != null" >
+        TASK_DESC,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="pid != null" >
-        #{pid,jdbcType=INTEGER},
+        #{pid,jdbcType=VARCHAR},
       </if>
       <if test="planitemId != null" >
         #{planitemId,jdbcType=INTEGER},
@@ -156,7 +170,7 @@
         #{deptName,jdbcType=VARCHAR},
       </if>
       <if test="subdeptId != null" >
-        #{subdeptId,jdbcType=VARCHAR},
+        #{subdeptId,jdbcType=INTEGER},
       </if>
       <if test="subdeptName != null" >
         #{subdeptName,jdbcType=VARCHAR},
@@ -197,13 +211,22 @@
       <if test="weekIndexId != null" >
         #{weekIndexId,jdbcType=INTEGER},
       </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskDesc != null" >
+        #{taskDesc,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.supermap.base.pojo.smPeEmployeeHour" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.supermap.base.pojo.SmPeEmployeeHour" >
     update sm_pe_employee_hour
     <set >
       <if test="pid != null" >
-        PID = #{pid,jdbcType=INTEGER},
+        PID = #{pid,jdbcType=VARCHAR},
       </if>
       <if test="planitemId != null" >
         PLANITEM_ID = #{planitemId,jdbcType=INTEGER},
@@ -227,7 +250,7 @@
         DEPT_NAME = #{deptName,jdbcType=VARCHAR},
       </if>
       <if test="subdeptId != null" >
-        SUBDEPT_ID = #{subdeptId,jdbcType=VARCHAR},
+        SUBDEPT_ID = #{subdeptId,jdbcType=INTEGER},
       </if>
       <if test="subdeptName != null" >
         SUBDEPT_NAME = #{subdeptName,jdbcType=VARCHAR},
@@ -268,12 +291,21 @@
       <if test="weekIndexId != null" >
         WEEK_INDEX_ID = #{weekIndexId,jdbcType=INTEGER},
       </if>
+      <if test="startdate != null" >
+        STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskDesc != null" >
+        TASK_DESC = #{taskDesc,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.supermap.base.pojo.smPeEmployeeHour" >
+  <update id="updateByPrimaryKey" parameterType="com.supermap.base.pojo.SmPeEmployeeHour" >
     update sm_pe_employee_hour
-    set PID = #{pid,jdbcType=INTEGER},
+    set PID = #{pid,jdbcType=VARCHAR},
       PLANITEM_ID = #{planitemId,jdbcType=INTEGER},
       PLANITEM_NAME = #{planitemName,jdbcType=VARCHAR},
       PLANITERM_HOUR = #{planitermHour,jdbcType=DOUBLE},
@@ -281,7 +313,7 @@
       STAFFNAME = #{staffname,jdbcType=VARCHAR},
       DEPT_ID = #{deptId,jdbcType=INTEGER},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},
-      SUBDEPT_ID = #{subdeptId,jdbcType=VARCHAR},
+      SUBDEPT_ID = #{subdeptId,jdbcType=INTEGER},
       SUBDEPT_NAME = #{subdeptName,jdbcType=VARCHAR},
       PROJECT_ID = #{projectId,jdbcType=INTEGER},
       PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
@@ -294,7 +326,10 @@
       ISDELETE = #{isdelete,jdbcType=INTEGER},
       STATUS = #{status,jdbcType=INTEGER},
       WORK_TYPE = #{workType,jdbcType=INTEGER},
-      WEEK_INDEX_ID = #{weekIndexId,jdbcType=INTEGER}
+      WEEK_INDEX_ID = #{weekIndexId,jdbcType=INTEGER},
+      STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      TASK_DESC = #{taskDesc,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

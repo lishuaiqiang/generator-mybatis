@@ -1,17 +1,17 @@
 package com.supermap.base.mapper;
 
-import com.supermap.base.pojo.smPeEmployeeHour;
+import com.supermap.base.pojo.SmPeEmployeeHour;
 
-public interface smPeEmployeeHourMapper {
+public interface SmPeEmployeeHourMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(smPeEmployeeHour record);
+    int insert(SmPeEmployeeHour record);
 
-    int insertSelective(smPeEmployeeHour record);
+    int insertSelective(SmPeEmployeeHour record);
 
-    smPeEmployeeHour selectByPrimaryKey(Integer id);
+    SmPeEmployeeHour selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(smPeEmployeeHour record);
+    int updateByPrimaryKeySelective(SmPeEmployeeHour record);
 
-    int updateByPrimaryKey(smPeEmployeeHour record);
+    int updateByPrimaryKey(SmPeEmployeeHour record);
 }
