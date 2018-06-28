@@ -41,7 +41,7 @@
         <!--enableDeleteByExample="false"-->
         <!--enableSelectByExample="false"-->
         <!--selectByExampleQueryId="false"-->
-        <table tableName="sm_pe_employee_hour" domainObjectName="SmPeEmployeeHour" enableCountByExample="false"
+        <table tableName="sm_pe_hour_project_type" domainObjectName="SmPeHourProjectType" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
